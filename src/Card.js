@@ -6,6 +6,19 @@
     }
 
     class Card{
+        static _s(){
+            /*
+             複数の状態があり得るデータ。
+             配列で入る。
+             環境によってコストの支払い方法が変動する場合、関数の第一引数を使う。
+             環境によってコストの支払い方法が追加された場合、Cardクラスは支払い方法の追加/削除の方法を提供する(現時点でのベターな選択)。
+             */
+            return [
+                //---カード固有、外的要因で変化する---
+                "costs",
+            ];
+        }
+
         constructor(data){
             /*
              全てのデータは関数として扱う。
@@ -19,7 +32,6 @@
                 "caption",
                 "card_type",
                 "creature_type",
-                "costs",
                 "power",
                 "toughness",
 
@@ -45,7 +57,16 @@
             ].forEach((key) => {
                 if(typeof data[key] === "function") this[key] = data[key];
             });
+
+            Card._s().forEach((key)=>{
+                if(Array.isArray(data[key])) this["_"+key] = data[key];
+            });
         }
+
+        costs(){
+            //迂闊な！
+            return this["_costs"];
+        };
     };
 
     window.nabiki.Card = Card;

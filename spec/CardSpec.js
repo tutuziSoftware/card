@@ -6,10 +6,10 @@ describe("Card", ()=>{
                 "creature_type":()=>"機械",
                 "flavor_text":()=>"彼の口は機械による利便性を説いた。しかし彼の無くした腕は痛みを訴えた。　ーーー機械神",
                 "caption":()=>"アップキープ時、あなたは1点のライフを失う。アップキープ時、あなたはカードを1枚引く",
-                "cost":()=>2,
+                "costs":[()=>2],
                 "power":()=>2,
                 "toughness":()=>2,
-                "do_upkeep":(field, you_id, enemy_id)=>{
+                "upkeep_step":(field, you_id, enemy_id)=>{
                     //アップキープ時に、あなたは1点のライフを失う
                     field[you_id].hp(-1);
 
@@ -22,7 +22,8 @@ describe("Card", ()=>{
             expect(hanki.creature_type()).toBe("機械");
             expect(hanki.flavor_text()).toBe("彼の口は機械による利便性を説いた。しかし彼の無くした腕は痛みを訴えた。　ーーー機械神");
             expect(hanki.caption()).toBe("アップキープ時、あなたは1点のライフを失う。アップキープ時、あなたはカードを1枚引く");
-            expect(hanki.cost()).toBe(2);
+            expect(hanki.costs().length).toBe(1);
+            expect(hanki.costs()[0]()).toBe(2);
             expect(hanki.power()).toBe(2);
             expect(hanki.toughness()).toBe(2);
         });
