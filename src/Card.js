@@ -59,7 +59,7 @@
             });
 
             Card._s().forEach((key)=>{
-                if(Array.isArray(data[key])) this["_"+key] = data[key];
+                if(Array.isArray(data[key])) this["_"+key] = new Map(data[key]);
             });
         }
 

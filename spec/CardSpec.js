@@ -5,7 +5,9 @@ describe("Card", ()=>{
             "creature_type":()=>"機械",
             "flavor_text":()=>"彼の口は機械による利便性を説いた。しかし彼の無くした腕は痛みを訴えた。　ーーー機械神",
             "caption":()=>"アップキープ時、あなたは1点のライフを失う。アップキープ時、あなたはカードを1枚引く",
-            "costs":[()=>2],
+            "costs":[
+                ["hanki_cost_id", ()=>2]
+            ],
             "power":()=>2,
             "toughness":()=>2,
             "upkeep_step":(field, you_id, enemy_id)=>{
@@ -27,8 +29,8 @@ describe("Card", ()=>{
         });
 
         it("コスト支払い方法", ()=>{
-            expect(hanki.costs().length).toBe(1);
-            expect(hanki.costs()[0]()).toBe(2);
+            expect(hanki.costs().size).toBe(1);
+            expect(hanki.costs().get("hanki_cost_id")()).toBe(2);
         });
 
         it("コスト支払い方法追加");
