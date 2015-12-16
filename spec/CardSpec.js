@@ -1,32 +1,38 @@
 describe("Card", ()=>{
     describe("クリーチャー", ()=>{
+        var hanki = new nabiki.Card({
+            "name":()=>"半機",
+            "creature_type":()=>"機械",
+            "flavor_text":()=>"彼の口は機械による利便性を説いた。しかし彼の無くした腕は痛みを訴えた。　ーーー機械神",
+            "caption":()=>"アップキープ時、あなたは1点のライフを失う。アップキープ時、あなたはカードを1枚引く",
+            "costs":[()=>2],
+            "power":()=>2,
+            "toughness":()=>2,
+            "upkeep_step":(field, you_id, enemy_id)=>{
+                //アップキープ時に、あなたは1点のライフを失う
+                field[you_id].hp(-1);
+
+                //アップキープ時に、あなたはカードを1枚引く
+                field[you_id].hands.draw();
+            }
+        });
+
         it("半機", ()=>{
-            var hanki = new nabiki.Card({
-                "name":()=>"半機",
-                "creature_type":()=>"機械",
-                "flavor_text":()=>"彼の口は機械による利便性を説いた。しかし彼の無くした腕は痛みを訴えた。　ーーー機械神",
-                "caption":()=>"アップキープ時、あなたは1点のライフを失う。アップキープ時、あなたはカードを1枚引く",
-                "costs":[()=>2],
-                "power":()=>2,
-                "toughness":()=>2,
-                "upkeep_step":(field, you_id, enemy_id)=>{
-                    //アップキープ時に、あなたは1点のライフを失う
-                    field[you_id].hp(-1);
-
-                    //アップキープ時に、あなたはカードを1枚引く
-                    field[you_id].hands.draw();
-                }
-            });
-
             expect(hanki.name()).toBe("半機");
             expect(hanki.creature_type()).toBe("機械");
             expect(hanki.flavor_text()).toBe("彼の口は機械による利便性を説いた。しかし彼の無くした腕は痛みを訴えた。　ーーー機械神");
             expect(hanki.caption()).toBe("アップキープ時、あなたは1点のライフを失う。アップキープ時、あなたはカードを1枚引く");
-            expect(hanki.costs().length).toBe(1);
-            expect(hanki.costs()[0]()).toBe(2);
             expect(hanki.power()).toBe(2);
             expect(hanki.toughness()).toBe(2);
         });
+
+        it("コスト支払い方法", ()=>{
+            expect(hanki.costs().length).toBe(1);
+            expect(hanki.costs()[0]()).toBe(2);
+        });
+
+        it("コスト支払い方法追加");
+        it("コスト支払い方法削除");
     });
 
 
