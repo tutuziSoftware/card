@@ -6,7 +6,11 @@ describe("Card", ()=>{
             "flavor_text":()=>"彼の口は機械による利便性を説いた。しかし彼の無くした腕は痛みを訴えた。　ーーー機械神",
             "caption":()=>"アップキープ時、あなたは1点のライフを失う。アップキープ時、あなたはカードを1枚引く",
             "costs":[
-                ["hanki_cost_id", ()=>2]
+                ["hanki_cost_id", (field, you_id)=>{
+                    //fieldからマナを2つ取り除けるか確認する
+                    //fieldからマナを2つ取り除く
+                    //fieldに半機を出す
+                }]
             ],
             "power":()=>2,
             "toughness":()=>2,
@@ -28,13 +32,10 @@ describe("Card", ()=>{
             expect(hanki.toughness()).toBe(2);
         });
 
-        it("コスト支払い方法", ()=>{
+        it("コスト関数の参照、追加、削除はMapで行う(オブジェクト指向的には悪い手だが、わざわざget,put,deleteを用意すべきなのかは今後考えるべきもの)", ()=>{
             expect(hanki.costs().size).toBe(1);
-            expect(hanki.costs().get("hanki_cost_id")()).toBe(2);
+            expect(typeof hanki.costs().get("hanki_cost_id")).toBe("function");
         });
-
-        it("コスト支払い方法追加");
-        it("コスト支払い方法削除");
     });
 
 
@@ -62,6 +63,11 @@ describe("Card", ()=>{
         });
 
         it("マナ");
+
+        describe("場にカードを出す", ()=>{
+            it("カードの指定");
+            it("コストの支払い");
+        });
     });
 
 
