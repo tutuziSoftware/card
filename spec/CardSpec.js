@@ -44,9 +44,9 @@ describe("Card", ()=>{
 
         it("手札の追加",()=>{
             expect(hands.length).toBe(0);
-            field.hands.push(new nabiki.Card({name:"test"}));
+            hands.push(new nabiki.Card({name:()=>"test"}));
             expect(hands.length).toBe(1);
-            expect(hands[0]["name"]).toBe("test");
+            expect(hands[0].name()).toBe("test");
         });
 
         it("手札の削除");
