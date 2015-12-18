@@ -49,7 +49,12 @@ describe("Card", ()=>{
             expect(hands[0].name()).toBe("test");
         });
 
-        it("手札の削除");
+        it("手札の削除",()=>{
+            expect(hands.length).toBe(1);
+            hands.remove(0);
+            expect(hands.length).toBe(0);
+            expect(hands[0]).toBeUndefined();
+        });
     });
 
 

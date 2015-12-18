@@ -5,7 +5,11 @@
         window.nabiki = {};
     }
 
-    class Hands extends Array{};
+    class Hands extends Array{
+        remove(index){
+            if(index in this) this.splice(index, 1);
+        }
+    };
 
     window.nabiki.Hands = Hands;
 })(window);
