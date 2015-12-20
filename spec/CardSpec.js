@@ -67,20 +67,35 @@ describe("Card", ()=>{
             expect(field.life()).toBe(19);
         });
 
-        it("マナ");
+        it("マナ",()=>{
+            expect(field.mana()).toBe(0);
+            field.mana(1);
+            expect(field.mana()).toBe(1);
+            field.mana(-1);
+            expect(field.mana()).toBe(0);
+        });
 
-        describe("場にカードを出す", ()=>{
-            it("カードの指定");
-            it("コストの支払い");
+        describe("最初のドローからフェイズ終了まで", ()=>{
+            var field = new nabiki.HalfField;
+
+            it("最初のドロー");
+            it("アンタップステップ");
+            it("アップキープステップ");
+            it("メインステップ");
+            it("アタックステップ");
+            it("メインステップ");
+            it("ターンエンドステップ");
         });
     });
 
 
     describe("全体の場", ()=>{
         //Map？
+        /*
         var field = new nabiki.Field;
         field.add("you_id", new nabiki.HalfField);
         field.add("enemy_id", new nabiki.HalfField);
+        */
 
         it("最初のドロー");
         it("先攻後攻判定(先攻後攻の乱数は引数で持つ)");
