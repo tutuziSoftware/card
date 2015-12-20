@@ -58,6 +58,43 @@ describe("Card", ()=>{
     });
 
 
+    describe("カードデッキ",()=>{
+        var deck = new nabiki.Deck([
+            {
+                "length":4,
+                "card":{
+                    "name":()=>"半機"
+                }
+            },
+            {
+                "length":4,
+                "card":{
+                    "name":()=>"妄想の天使"
+                }
+            }
+        ]);
+
+        it("ドロー",(done)=>{
+            expect(deck.length).toBe(8);
+            deck.draw(0).then((card)=>{
+                expect(card.name()).toBe("半機");
+                expect(deck.length).toBe(7);
+
+                deck.draw(1).then((card)=>{
+                    expect(card.name()).toBe("妄想の天使");
+                    expect(deck.length).toBe(6);
+
+                    deck.draw(2).catch((message)=>{
+                        expect(message).toBe(nabiki.OUT_OF_BOUNDS);
+                        expect(deck.length).toBe(6);
+                        done();
+                    });
+                });
+            });
+        });
+    });
+
+
     describe("自分の場",()=>{
         var field = new nabiki.HalfField;
 
