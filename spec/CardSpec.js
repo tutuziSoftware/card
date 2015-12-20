@@ -62,9 +62,9 @@ describe("Card", ()=>{
         var field = new nabiki.HalfField;
 
         it("ライフ", ()=>{
-            expect(field.hp()).toBe(20);
-            field.hp(-1);
-            expect(field.hp()).toBe(19);
+            expect(field.life()).toBe(20);
+            field.life(-1);
+            expect(field.life()).toBe(19);
         });
 
         it("マナ");
