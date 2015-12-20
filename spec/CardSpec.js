@@ -58,6 +58,27 @@ describe("Card", ()=>{
     });
 
 
+    describe("カードデッキ",()=>{
+        var deck = new nabiki.Deck([
+            {
+                "count":4,
+                "card":{
+                    "name":()=>"半機"
+                }
+            },
+            {
+                "count":4,
+                "card":{
+                    "name":()=>"妄想の天使"
+                }
+            }
+        ]);
+
+        it("最初のドロー");
+        it("通常ドロー");
+    });
+
+
     describe("自分の場",()=>{
         var field = new nabiki.HalfField;
 
