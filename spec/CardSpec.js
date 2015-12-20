@@ -96,7 +96,7 @@ describe("Card", ()=>{
 
 
     describe("自分の場",()=>{
-        var field = new nabiki.HalfField;
+        var field = new nabiki.HalfField(new nabiki.Hands);
 
         it("ライフ", ()=>{
             expect(field.life()).toBe(20);
@@ -112,30 +112,23 @@ describe("Card", ()=>{
             expect(field.mana()).toBe(0);
         });
 
-        describe("最初のドローからフェイズ終了まで", ()=>{
-            var field = new nabiki.HalfField;
-
-            it("最初のドロー");
-            it("アンタップステップ");
-            it("アップキープステップ");
-            it("メインステップ");
-            it("アタックステップ");
-            it("メインステップ");
-            it("ターンエンドステップ");
+        it("手札",()=>{
+            expect(field.hands).not.toBeUndefined();
+            expect(field.hands.length).toBe(0);
         });
+
+        it("戦場");
     });
 
-
-    describe("全体の場", ()=>{
-        //Map？
-        /*
-        var field = new nabiki.Field;
-        field.add("you_id", new nabiki.HalfField);
-        field.add("enemy_id", new nabiki.HalfField);
-        */
+    describe("各ステップの実装",()=>{
+        //var rule = new nabiki.Rule;
 
         it("最初のドロー");
-        it("先攻後攻判定(先攻後攻の乱数は引数で持つ)");
-        it("");
+        it("アンタップステップ");
+        it("アップキープステップ");
+        it("メインステップ");
+        it("アタックステップ");
+        it("メインステップ");
+        it("ターンエンドステップ");
     });
 });
