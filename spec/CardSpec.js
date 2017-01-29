@@ -9,7 +9,7 @@
  * 　サーバ側でも同じ値を持っていて、不正値のチェックはしないといけない
  */
 
-describe("Card", ()=>{
+describe("Card単体", ()=>{
     describe("クリーチャー", ()=>{
         it("半機", ()=>{
             var hanki = new nabiki.Card({
@@ -17,9 +17,9 @@ describe("Card", ()=>{
                 "creature_type":()=>"機械",
                 "flavor_text":()=>"彼の口は機械による利便性を説いた。しかし彼の無くした腕は痛みを訴えた。　ーーー機械神",
                 "caption":()=>"アップキープ時、あなたは1点のライフを失う。アップキープ時、あなたはカードを1枚引く",
-                "cost":()=>2,
-                "power":()=>2,
-                "toughness":()=>2,
+                "costs":(fetch)=>fetch(2),
+                "power":(fetch)=>fetch(2),
+                "toughness":(fetch)=>fetch(2),
                 "do_upkeep":(field, you_id, enemy_id)=>{
                     //アップキープ時に、あなたは1点のライフを失う
                     field[you_id].hp(-1);
@@ -33,21 +33,34 @@ describe("Card", ()=>{
             expect(hanki.creature_type()).toBe("機械");
             expect(hanki.flavor_text()).toBe("彼の口は機械による利便性を説いた。しかし彼の無くした腕は痛みを訴えた。　ーーー機械神");
             expect(hanki.caption()).toBe("アップキープ時、あなたは1点のライフを失う。アップキープ時、あなたはカードを1枚引く");
-            expect(hanki.cost()).toBe(2);
-            expect(hanki.power()).toBe(2);
-            expect(hanki.toughness()).toBe(2);
+            hanki.costs(function(fetch){
+                expect(fetch).toBe(2);
+            });
+            hanki.power(function(fetch){
+                expect(fetch).toBe(2);
+            });
+            hanki.toughness(function(fetch){
+                expect(fetch).toBe(2);
+            });
         });
     });
 
 
-    describe("手札",()=>{
+    describe("手札単体",()=>{
+        console.log(nabiki);
         var hands = new nabiki.Hands;
 
         it("手札の追加",()=>{
-            expect(hands.length).toBe(0);
-            field.hands.push(new nabiki.Card({name:"test"}));
-            expect(hands.length).toBe(1);
-            expect(hands[0]["name"]).toBe("test");
+            hands.count(function(fetch){
+                expect(fetch).toBe(0);
+            });
+            hands.push(new nabiki.Card({name:"test"}));
+            hands.count(function(fetch){
+                expect(fetch).toBe(1);
+            });
+            hands.get(0).then(function(){
+                expect(card.name()).toBe("test");
+            });
         });
 
         it("手札の削除");
