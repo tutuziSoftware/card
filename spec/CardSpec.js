@@ -50,11 +50,11 @@ describe("Card単体", ()=>{
         var hands = new nabiki.Hands;
 
         it("手札の追加",(done)=>{
-            hands.count(function(fetch){
+            hands.count.then(function(fetch){
                 expect(fetch).toBe(0);
             });
             hands.push(new nabiki.Card({name:()=>"test"}));
-            hands.count(function(fetch){
+            hands.count.then(function(fetch){
                 expect(fetch).toBe(1);
             });
             hands.get(0).then(function(card){
@@ -70,13 +70,31 @@ describe("Card単体", ()=>{
             });
         });
 
-        it("手札の削除", (done)=>{
-            hands.count((fetch)=>{
-                expect(fetch).toBe(1);
+        it("手札上限。10枚まで、11枚目は無視する", (done)=>{
+            for(var i = 0 ; i != 8 ; i++){
+                hands.push(new nabiki.Card({name:()=>"add"}));
+            }
+            hands.push(new nabiki.Card({name:()=>"hand10"}));
+            hands.count.then((count)=>{
+                expect(count).toBe(10);
             });
+            hands.push(new nabiki.Card({name:()=>"hand11"}));
+            hands.count.then((count)=>{
+                expect(count).toBe(10);
+            });
+            hands.get(9).then((card)=>{
+                expect(card.name()).toBe("hand10");
+                done();
+            });
+        });
+
+        it("手札の削除", (done)=>{
             hands.remove(0).then(()=>{
-                hands.count((fetch)=>{
-                    expect(fetch).toBe(0);
+                hands.count.then((fetch)=>{
+                    expect(fetch).toBe(9);
+                });
+                hands.get(0).then((card)=>{
+                    expect(card.name()).toBe("add");
                     done();
                 });
             });
@@ -84,18 +102,23 @@ describe("Card単体", ()=>{
     });
 
 
+    /*
+     * Fieldクラスはクリーチャーなどの置き場。Handsと大体同じ
+     * 操作系は操作クラスに任せる。
+     */
     describe("自分の場",()=>{
-        var field = new nabiki.HalfField;
-
-        it("ライフ", ()=>{
-            expect(field.hp()).toBe(20);
-            field.hp(-1);
-            expect(field.hp()).toBe(19);
+        it("Fieldの存在確認", ()=>{
+            expect(nabiki.Field).not.toBeUndefined();
         });
 
-        it("マナ");
+        var field = new nabiki.Field;
+
+        it("クリーチャー追加");
+        it("クリーチャー追加上限");
+        it("クリーチャー削除");
     });
 
+    describe("操作クラス");
 
     describe("全体の場", ()=>{
         //Map？

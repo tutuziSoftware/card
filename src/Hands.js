@@ -15,11 +15,13 @@
         }
 
         push(card){
+            if(this.data.length == 10) return;
+
             this.data.push(card);
         }
 
-        count(fetch){
-            fetch(this.data.length);
+        get count(){
+            return Promise.resolve(this.data.length);
         }
 
         get(index){
