@@ -35,7 +35,7 @@
                 this.data.splice(index, 1);
                 return Promise.resolve();
             }else{
-                return Promise.reject();z
+                return Promise.reject();
             }
         }
     };
