@@ -23,13 +23,20 @@
         }
 
         get(index){
-            return new Promise((resolve, reject)=>{
-                if(this.data[index] !== void 0){
-                    resolve(this.data[index]);
-                }else{
-                    reject();
-                }
-            });
+            if(this.data[index] !== void 0){
+                return Promise.resolve(this.data[index]);
+            }else{
+                return Promise.reject();
+            }
+        }
+
+        remove(index){
+            if(this.data[index] !== void 0){
+                this.data.splice(index, 1);
+                return Promise.resolve();
+            }else{
+                return Promise.reject();z
+            }
         }
     };
 

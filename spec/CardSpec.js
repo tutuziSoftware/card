@@ -47,23 +47,40 @@ describe("Card単体", ()=>{
 
 
     describe("手札単体",()=>{
-        console.log(nabiki);
         var hands = new nabiki.Hands;
 
-        it("手札の追加",()=>{
+        it("手札の追加",(done)=>{
             hands.count(function(fetch){
                 expect(fetch).toBe(0);
             });
-            hands.push(new nabiki.Card({name:"test"}));
+            hands.push(new nabiki.Card({name:()=>"test"}));
             hands.count(function(fetch){
                 expect(fetch).toBe(1);
             });
-            hands.get(0).then(function(){
+            hands.get(0).then(function(card){
                 expect(card.name()).toBe("test");
+                done();
             });
         });
 
-        it("手札の削除");
+        it("存在しない手札を選択", (done)=>{
+            hands.get(1).catch(()=>{
+                expect(true).toBeTruthy();
+                done();
+            });
+        });
+
+        it("手札の削除", (done)=>{
+            hands.count((fetch)=>{
+                expect(fetch).toBe(1);
+            });
+            hands.remove(0).then(()=>{
+                hands.count((fetch)=>{
+                    expect(fetch).toBe(0);
+                    done();
+                });
+            });
+        });
     });
 
 
