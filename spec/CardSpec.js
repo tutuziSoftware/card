@@ -113,19 +113,71 @@ describe("Card単体", ()=>{
 
         var field = new nabiki.Field;
 
-        it("クリーチャー追加");
-        it("クリーチャー追加上限");
+        it("クリーチャー追加",(done)=>{
+            field.count.then((count)=>{
+                expect(count).toBe(0);
+                field.add(0, new nabiki.Card({name:()=>"creature1"}));
+                field.count.then((count)=>{
+                    expect(count).toBe(1);
+
+                    //3番目に追加すると……？
+                    field.add(3, new nabiki.Card({name:()=>"creature2"}));
+                    field.count.then((count)=>{
+                        expect(count).toBe(2);
+
+                        field.get(0).then((card)=>{
+                            expect(card.name()).toBe("creature1");
+
+                            field.get(1).then((card)=>{
+                                expect(card.name()).toBe("creature2");
+
+                                field.get(2).catch(()=>{
+                                    expect(true).toBeTruthy();
+                                    done();
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+
+        it("クリーチャー追加上限",(done)=>{
+            "use strict";
+            for(var i = 2 ; i != 5 ; i++){(function(){
+                field.add(0, new nabiki.Card({name:()=>"creature"+i}));
+            })();}
+
+            field.count.then((count)=>{
+                expect(count).toBe(5);
+                expect(field.isPlay).toBeTruthy();
+                field.add(0, new nabiki.Card({name:()=>"creature6"}));
+
+                field.count.then((count)=>{
+                    //最大値
+                    expect(count).toBe(6);
+                    expect(field.isPlay).toBeFalsy();
+
+                    //最大値で追加しても何も起こらない
+                    var is = field.add(0, new nabiki.Card({name:()=>"creature"}));
+                    expect(is).toBeFalsy();
+                    done();
+                });
+            });
+        });
+
         it("クリーチャー削除");
     });
 
-    describe("操作クラス");
+    describe("ヒストリー",()=>{
+        it("操作内容のpush");
+    });
+
+    describe("操作クラス",()=>{
+
+    });
 
     describe("全体の場", ()=>{
-        //Map？
-        var field = new nabiki.Field;
-        field.add("you_id", new nabiki.HalfField);
-        field.add("enemy_id", new nabiki.HalfField);
-
         it("最初のドロー");
         it("先攻後攻判定(先攻後攻の乱数は引数で持つ)");
         it("");
