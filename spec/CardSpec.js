@@ -180,8 +180,29 @@ describe("Card単体", ()=>{
         });
     });
 
-    describe("ヒストリー",()=>{
-        it("操作内容のpush");
+    describe("ヒストリー。墓地は存在しない代わりに、操作記録が残る",()=>{
+        it("Fieldの存在確認", ()=>{
+            expect(nabiki.History).not.toBeUndefined();
+        });
+
+        var history = new nabiki.History;
+
+        it("操作内容のpush",(done)=>{
+            history.count.then((count)=>{
+                expect(count).toBe(0);
+                history.push(new nabiki.Card({name:()=>"creature"}));
+                history.count.then((count)=>{
+                    expect(count).toBe(1);
+                    history.get(0).then((card)=>{
+                        expect(card.name()).toBe("creature");
+                        history.get(1).catch(()=>{
+                            expect(true).toBeTruthy();
+                            done();
+                        });
+                    });
+                });
+            });
+        });
     });
 
     describe("操作クラス",()=>{
