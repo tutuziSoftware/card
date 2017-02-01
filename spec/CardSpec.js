@@ -166,7 +166,18 @@ describe("Card単体", ()=>{
             });
         });
 
-        it("クリーチャー削除");
+        it("クリーチャー削除",(done)=>{
+            field.get(0).then((card)=>{
+                expect(card.name()).toBe("creature6");
+
+                field.remove(0).then(()=>{
+                    field.get(0).then((card)=>{
+                        expect(card.name()).toBe("creature5");
+                        done();
+                    });
+                });
+            });
+        });
     });
 
     describe("ヒストリー",()=>{
