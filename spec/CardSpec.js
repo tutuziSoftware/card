@@ -206,7 +206,41 @@ describe("Card単体", ()=>{
     });
 
     describe("操作クラス",()=>{
+        it("操作クラスの存在確認",()=>{
+            expect(nabiki.Player).not.toBeUndefined();
+        });
 
+        var player = new nabiki.Player;
+
+        it("スタートステップ(攻守決め)");
+        it("スタートステップ(ドロー)");
+        it("マリガンステップ");
+        it("ドローステップ",(done)=>{
+            expect(player.hand).not.toBeUndefined();
+
+            player.hand.then((hand)=>{
+                expect(hand.length).toBe(0);
+                player.doDrawStep(0).then(()=>{
+                    player.hand.then((hand)=>{
+                        expect(hand.length).toBe(1);
+                        done();
+                    });
+                });
+            });
+        });
+        it("アンタップステップ");
+        it("アップキープステップ(ターン開始時)");
+        it("カードを場に出す");
+        it("ステージングステップ");
+        it("ターンエンド");
+
+        it("ドローステップ2");
+        it("アンタップステップ2");
+        it("アップキープステップ(ターン開始時)2");
+        it("アタックステップ");
+        it("カードを場に出す");
+        it("ステージングステップ");
+        it("ターンエンド");
     });
 
     describe("全体の場", ()=>{

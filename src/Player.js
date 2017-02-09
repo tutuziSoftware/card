@@ -1,22 +1,48 @@
-function Player() {
-}
-Player.prototype.play = function(song) {
-  this.currentlyPlayingSong = song;
-  this.isPlaying = true;
-};
+(function(window){
+  "use strict";
 
-Player.prototype.pause = function() {
-  this.isPlaying = false;
-};
-
-Player.prototype.resume = function() {
-  if (this.isPlaying) {
-    throw new Error("song is already playing");
+  if(window.nabiki === void 0){
+    window.nabiki = {};
   }
 
-  this.isPlaying = true;
-};
+  window.nabiki.Player = class{
+    constructor(data){
+        //TODO 全部仮。jsonに合わせて入れる事
+        this.deck = [
+            {
+                "card":{
+                    "name":()=>"義勇兵"
+                },
+                "number":4
+            },
+            {
+                "card":{
+                    "name":()=>"機械兵"
+                },
+                "number":4
+            }
+        ];
 
-Player.prototype.makeFavorite = function() {
-  this.currentlyPlayingSong.persistFavoriteStatus(true);
-};
+        this._hand = [];
+    }
+
+    get hand(){
+        return Promise.resolve(this._hand);
+    }
+
+    doDrawStep(random){
+        if(this.deck.length == 0){
+            return Promise.resolve({"name":()=>"マナ妖精"});
+        }
+
+        if(this.deck[random].number){
+            this._hand.push(Object.create(this.deck[random].card));
+        }else{
+            //number == 0なら削除
+            this.data.splice(random, 1);
+        }
+
+        return Promise.resolve();
+    }
+  };
+})(window);
